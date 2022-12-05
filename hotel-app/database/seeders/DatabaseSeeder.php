@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {   
         User::create([
             'name' => 'Bane',
             'email' => 'bane@bane.rs',
@@ -32,5 +33,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'anja@anja.rs',
             'password' => bcrypt('anja'),
         ]);
+
+        $this->call([
+            RoomSeeder::class,
+            GuestSeeder::class,
+            ReservationSeeder::class
+        ]);
+
     }
 }

@@ -26,4 +26,6 @@ class Reservation extends Model
         return $this->belongsTo(Guest::class);
     }
 
+    public $timestamps = false;
+
 }
