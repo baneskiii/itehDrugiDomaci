@@ -15,6 +15,8 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
+        Room::truncate();
+
         Room::create([
             'floor' => 1,
             'area_in_m^2' => 30,
