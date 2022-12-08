@@ -13,6 +13,7 @@ class Guest extends Model
         'first_name',
         'last_name',
         'birthdate',
+        'reservation_id'
     ];
 
     public function reservation()

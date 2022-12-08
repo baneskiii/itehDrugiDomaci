@@ -6,6 +6,7 @@ use App\Http\Resources\GuestCollection;
 use App\Http\Resources\GuestResource;
 use App\Models\Guest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GuestController extends Controller
 {
@@ -38,7 +39,24 @@ class GuestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:25',
+            'last_name' => 'required|string|max:25',
+            'birthdate' => 'required|string|max:10',
+            'reservation_id' => 'required'
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors());
+
+        $guest = Guest::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'birthdate' => $request->birthdate,
+            'reservation_id' => $request->reservation_id
+        ]);
+
+        return response()->json(['Guest created', new GuestResource($guest)]);
     }
 
     /**
@@ -72,7 +90,24 @@ class GuestController extends Controller
      */
     public function update(Request $request, Guest $guest)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:25',
+            'last_name' => 'required|string|max:25',
+            'birthdate' => 'required|string|max:10',
+            'reservation_id' => 'required'
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors());
+
+        $guest->first_name = $request->first_name;
+        $guest->last_name = $request->last_name;
+        $guest->birthdate = $request->birthdate;
+        $guest->reservation_id = $request->reservation_id;
+
+        $guest->save();
+
+        return response()->json(['Guest updated', new GuestResource($guest)]);
     }
 
     /**
@@ -83,6 +118,7 @@ class GuestController extends Controller
      */
     public function destroy(Guest $guest)
     {
-        //
+        $guest->delete();
+        return response()->json('Guest deleted');
     }
 }

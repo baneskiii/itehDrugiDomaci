@@ -11,7 +11,7 @@ class Room extends Model
 
     protected $fillable = [
         'floor',
-        'area_in_m^2',
+        'area_in_square_meters',
         'number_of_beds',
     ];
 

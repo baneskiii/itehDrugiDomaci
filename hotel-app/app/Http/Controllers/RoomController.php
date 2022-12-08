@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GuestResource;
+use App\Http\Resources\RoomCollection;
+use App\Http\Resources\RoomResource;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoomController extends Controller
 {
@@ -15,7 +19,7 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return $rooms;
+        return new RoomCollection($rooms);
     }
 
     /**
@@ -36,7 +40,22 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'floor' => 'required|integer|between:1,3',
+            'area_in_square_meters' => 'required|integer|between:30,80',
+            'number_of_beds' => 'required|integer|between:2,4'
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors());
+
+        $room = Room::create([
+            'floor' => $request->floor,
+            'area_in_square_meters' => $request->area_in_square_meters,
+            'number_of_beds' => $request->number_of_beds
+        ]);
+
+        return response()->json(['Room created', new RoomResource($room)]);
     }
 
     /**
@@ -45,12 +64,9 @@ class RoomController extends Controller
      * @param  \App\Models\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function show($room_id)
+    public function show(Room $room)
     {
-        $room = Room::find($room_id);
-        if (is_null($room))
-            return response()->json('Room was not found', 404);
-        return response()->json($room);
+        return new RoomResource($room);
     }
 
     /**
@@ -73,7 +89,22 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'floor' => 'required|integer|between:1,3',
+            'area_in_square_meters' => 'required|integer|between:30,80',
+            'number_of_beds' => 'required|integer|between:2,4'
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors());
+
+        $room->floor = $request->floor;
+        $room->area_in_square_meters = $request->area_in_square_meters;
+        $room->number_of_beds = $request->number_of_beds;
+
+        $room->save();
+
+        return response()->json(['Room updated', new RoomResource($room)]);
     }
 
     /**
@@ -84,6 +115,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        $room->delete();
+        return response()->json('Room deleted');
     }
 }

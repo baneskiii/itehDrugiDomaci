@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoomController;
@@ -20,10 +21,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/users', [UserController::class, 'index']);
-Route::get('/rooms', [RoomController::class, 'index']);
-
 Route::get('/users/{id}', [UserController::class, 'show']);
-Route::get('/rooms/{id}', [RoomController::class, 'show']);
 
-Route::resource('guests', GuestController::class);
-Route::resource('reservations', ReservationController::class);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::resource('rooms', RoomController::class)->only(['index', 'show']);
+Route::resource('guests', GuestController::class)->only(['index', 'show']);
+Route::resource('reservations', ReservationController::class)->only(['index', 'show']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get(
+        '/profile',
+        function (Request $request) {
+            return auth()->user();
+        }
+    );
+
+    Route::resource('rooms', RoomController::class)->only(['update', 'store', 'destroy']);
+
+    Route::resource('guests', GuestController::class)->only(['update', 'store', 'destroy']);
+
+    Route::resource('reservations', ReservationController::class)->only(['update', 'store', 'destroy']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

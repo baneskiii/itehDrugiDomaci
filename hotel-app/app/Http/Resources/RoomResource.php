@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GuestResource extends JsonResource
+class RoomResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -12,17 +12,14 @@ class GuestResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-
-    public static $wrap = 'guest';
-
+    public static $wrap = 'room';
     public function toArray($request)
     {
         return [
             'id' => $this->resource->id,
-            'first_name' => $this->resource->first_name,
-            'last_name' => $this->resource->last_name,
-            'birthdate' => $this->resource->birthdate,
-            'reservation' => $this->resource->reservation
+            'floor' => $this->resource->floor,
+            'area_in_square_meters' => $this->resource->area_in_square_meters,
+            'number_of_beds' => $this->resource->number_of_beds
         ];
     }
 }

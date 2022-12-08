@@ -17,31 +17,31 @@ class RoomSeeder extends Seeder
     {
         Room::create([
             'floor' => 1,
-            'area_in_m^2' => 30,
+            'area_in_square_meters' => 30,
             'number_of_beds' => 2
         ]);
 
         Room::create([
             'floor' => 1,
-            'area_in_m^2' => 35,
+            'area_in_square_meters' => 35,
             'number_of_beds' => 2
         ]);
 
         Room::create([
             'floor' => 2,
-            'area_in_m^2' => 50,
+            'area_in_square_meters' => 50,
             'number_of_beds' => 3
         ]);
 
         Room::create([
             'floor' => 2,
-            'area_in_m^2' => 55,
+            'area_in_square_meters' => 55,
             'number_of_beds' => 3
         ]);
 
         Room::create([
             'floor' => 3,
-            'area_in_m^2' => 60,
+            'area_in_square_meters' => 60,
             'number_of_beds' => 4
         ]);
 
