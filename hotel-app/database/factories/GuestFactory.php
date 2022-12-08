@@ -18,7 +18,7 @@ class GuestFactory extends Factory
     public function definition()
     {
         return [
-            'first_name' => fake()->name(),
+            'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'birthdate' => fake()->date("d-m-Y"),
             'reservation_id' => 1
