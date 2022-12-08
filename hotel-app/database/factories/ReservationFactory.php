@@ -19,8 +19,7 @@ class ReservationFactory extends Factory
         return [
             'date_from' => '01.01.2023',
             'date_to' => '10.01.2023',
-            'room_id' => 0,
-            'guest_id' => 0,
+            'room_id' => 1
         ];
     }
 }

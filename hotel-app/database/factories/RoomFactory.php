@@ -18,9 +18,9 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'floor' => fake()->randomNumber(),
+            'floor' => rand(1, 3),
             'area_in_m^2' => 50,
-            'number_of_beds' => fake()->randomNumber(),
+            'number_of_beds' => rand(1, 5),
         ];
     }
 }

@@ -15,8 +15,6 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
-        Room::truncate();
-
         Room::create([
             'floor' => 1,
             'area_in_m^2' => 30,
@@ -46,5 +44,7 @@ class RoomSeeder extends Seeder
             'area_in_m^2' => 60,
             'number_of_beds' => 4
         ]);
+
+        Room::factory(2)->create();
     }
 }

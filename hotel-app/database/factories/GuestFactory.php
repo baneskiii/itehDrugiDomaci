@@ -20,7 +20,8 @@ class GuestFactory extends Factory
         return [
             'first_name' => fake()->name(),
             'last_name' => fake()->lastName(),
-            'birthdate' => fake()->date("d-m-Y")
+            'birthdate' => fake()->date("d-m-Y"),
+            'reservation_id' => 1
         ];
     }
 }

@@ -15,9 +15,9 @@ class Guest extends Model
         'birthdate',
     ];
 
-    public function reservations()
+    public function reservation()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->belongsTo(Reservation::class);
     }
 
     public $timestamps = false;
