@@ -119,6 +119,8 @@ class GuestController extends Controller
     public function destroy(Guest $guest)
     {
         $guest->delete();
-        return response()->json('Guest deleted');
+        return [
+            'message' => 'Guest deleted'
+        ];
     }
 }
